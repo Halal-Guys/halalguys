@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordinate Geometry Quiz Game</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        #quiz-container {
+            max-width: 600px;
+            margin: auto;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        #question {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        #options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .option {
+            margin: 5px;
+        }
+
+        #submit-btn {
+            padding: 8px 15px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        #result {
+            font-size: 1.2em;
+            margin-top: 10px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <h1>Coordinate Geometry Quiz Game</h1>
+    <div id="question"></div>
+    <div id="options"></div>
+    <button id="submit-btn" onclick="checkAnswer()">Submit</button>
+    <div id="result"></div>
+</div>
+
+<script>
+    var questions = [
+        { 
+            question: "The distance of the point P(2, 3) from the x-axis is",
+            options: ["a) 2", "b) 3", "c) 1", "d) 5"],
+            answer: "b"
+        },
+        {
+            question: "The distance between the point P(1, 4) and Q(4, 0) is",
+            options: ["a) 4", "b) 5", "c) 6", "d) 3√3"],
+            answer: "b"
+        },
+        {
+            question: "The points (-5, 1), (1, p) and (4, -2) are collinear if the value of p is",
+            options: ["a) 3", "b) 2", "c) 1", "d) -1"],
+            answer: "d"
+        },
+        {
+            question: "The area of the triangle ABC with the vertices A(-5, 7), B(-4, -5) and C(4, 5) is",
+            options: ["a) 63", "b) 35", "c) 53", "d) 36"],
+            answer: "c"
+        },
+        {
+            question: "The distance of the point (α, β) from the origin is",
+            options: ["a) α + β", "b) α² + β²", "c) |α| + |β|", "d) (α² + β²)^1/2"],
+            answer: "d"
+        },
+        {
+            question: "The value of (4 + 7) x 2 is",
+            options: ["a) 11", "b) 22", "c) 33", "d) 21"],
+            answer: "a"
+        },
+        {
+            question: "The line segment joining the points (3, -1) and (-6, 5) is trisected. The coordinates of point of trisection are",
+            options: ["a) (3, 3)", "b) (- 3, 3)", "c) (3, – 3)", "d) (-3,-3)"],
+            answer: "b"
+        },
+        {
+            question: "The line 3x + y – 9 = 0 divides the line joining the points (1, 3) and (2, 7) internally in the ratio",
+            options: ["a) 3 : 4", "b) 3 : 2", "c) 2 : 3", "d) 4 : 3"],
+            answer: "a"
+        },
+        {
+            question: "The distance between A (a + b, a – b) and B(a – b, -a – b) is",
+            options: ["a) a - b", "b) a + b", "c) √(a^2 + b^2)", "d) |a - b|"],
+            answer: "c"
+        },
+        {
+            question: "If (a/3, 4) is the mid-point of the segment joining the points P(-6, 5) and R(-2, 3), then the value of ‘a’ is",
+            options: ["a) 12", "b) -6", "c) -12", "d) -4"],
+            answer: "c"
+        },
+        {
+            question: "If the distance between the points (x, -1) and (3, 2) is 5, then the value of x is",
+            options: ["a) -7 or -1", "b) -7 or 1", "c) 7 or 1", "d) 7 or -1"],
+            answer: "d"
+        },
+        {
+            question: "The points (1,1), (-2, 7) and (3, -3) are",
+            options: ["a) vertices of an equilateral triangle", "b) collinear", "c) vertices of an isosceles triangle", "d) none of these"],
+            answer: "b"
+        },
+        {
+            question: "The coordinates of the centroid of a triangle whose vertices are (0, 6), (8,12) and (8, 0) is",
+            options: ["a) (4, 6)", "b) (16, 6)", "c) (8, 6)", "d) (16/3, 6)"],
+            answer: "d"
+        },
+        {
+            question: "Two vertices of a triangle are (3, – 5) and (- 7,4). If its centroid is (2, -1), then the third vertex is",
+            options: ["a) (10, 2)", "b) (-10,2)", "c) (10,-2)", "d) (-10,-2)"],
+            answer: "c"
+        },
+        {
+            question: "The area of the triangle formed by the points A(-1.5, 3), B(6, -2) and C(-3, 4) is",
+            options: ["a) 0", "b) 1", "c) 2", "d) 3/2"],
+            answer: "a"
+        },
+        {
+            question: "If the points P(1, 2), B(0, 0) and C(a, b) are collinear, then",
+            options: ["a) 2a = b", "b) a = -b", "c) a = 2b", "d) a = b"],
+            answer: "a"
+        }
+    ];
+
+    function generateQuestion() {
+        var index = Math.floor(Math.random() * questions.length);
+        var questionObj = questions[index];
+        var questionHTML = "<div>" + questionObj.question + "</div>";
+        var optionsHTML = "";
+        for (var i = 0; i < questionObj.options.length; i++) {
+            optionsHTML += "<div class='option'><input type='radio' name='option' value='" + questionObj.options[i].charAt(0).toLowerCase() + "'> " + questionObj.options[i] + "</div>";
+        }
+        document.getElementById("question").innerHTML = questionHTML;
+        document.getElementById("options").innerHTML = optionsHTML;
+    }
+
+    function checkAnswer() {
+        var userAnswer = document.querySelector('input[name="option"]:checked');
+        if (userAnswer) {
+            userAnswer = userAnswer.value;
+            var questionIndex = Math.floor(Math.random() * questions.length);
+            var correctAnswer = questions[questionIndex].answer;
+
+            if (userAnswer === correctAnswer) {
+                document.getElementById("result").innerHTML = "Correct!";
+            } else {
+                document.getElementById("result").innerHTML = "Incorrect. The correct answer is " + correctAnswer.toUpperCase();
+            }
+
+            // Generate a new question
+            generateQuestion();
+        } else {
+            alert("Please select an option.");
+        }
+    }
+
+    // Initial question generation
+    generateQuestion();
+</script>
+
+</body>
+</html>

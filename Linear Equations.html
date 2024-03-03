@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linear Equations In Two Variables Quiz Game</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        #quiz-container {
+            max-width: 600px;
+            margin: auto;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        #question {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        #options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .option {
+            margin: 5px;
+        }
+
+        #submit-btn {
+            padding: 8px 15px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        #result {
+            font-size: 1.2em;
+            margin-top: 10px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <h1>Linear Equations In Two Variables Quiz Game</h1>
+    <div id="question"></div>
+    <div id="options"></div>
+    <button id="submit-btn" onclick="checkAnswer()">Submit</button>
+    <div id="result"></div>
+</div>
+
+<script>
+    var questions = [
+        { 
+            question: "A pair of linear equations a1x + b1y + c1 = 0; a2x + b2y + c2 = 0 is said to be inconsistent, if", 
+            options: ["a) Always intersecting", "b) Never intersecting", "c) Always coincident", "d) Parallel"], 
+            answer: "b" 
+        },
+        { 
+            question: "Graphically, the pair of equations 7x – y = 5; 21x – 3y = 10 represents two lines which are", 
+            options: ["a) Intersecting at one point", "b) Parallel", "c) Intersecting at two points", "d) Coincident"], 
+            answer: "b" 
+        },
+        { 
+            question: "The pair of equations 3x – 5y = 7 and – 6x + 10y = 7 have", 
+            options: ["a) A unique solution", "b) Infinitely many solutions", "c) No solution", "d) Two solutions"], 
+            answer: "c" 
+        },
+        { 
+            question: "If a pair of linear equations is consistent, then the lines will be", 
+            options: ["a) Always coincident", "b) Parallel", "c) Always intersecting", "d) Intersecting or coincident"], 
+            answer: "d" 
+        },
+        { 
+            question: "The pair of equations x = 0 and x = 5 has", 
+            options: ["a) No solution", "b) Unique/one solution", "c) Two solutions", "d) Infinitely many solutions"], 
+            answer: "c" 
+        },
+        { 
+            question: "The pair of equation x = – 4 and y = – 5 graphically represents lines which are", 
+            options: ["a) Intersecting at (-5, -4)", "b) Intersecting at (-4, -5)", "c) Intersecting at (5, 4)", "d) Intersecting at (4, 5)"], 
+            answer: "b" 
+        },
+        { 
+            question: "For what value of k, do the equations 2x – 3y + 10 = 0 and 3x + ky + 15 = 0 represent coincident lines", 
+            options: ["a) -5", "b) -10", "c) 0", "d) 5"], 
+            answer: "a" 
+        },
+        { 
+            question: "If the lines given by 2x + ky = 1 and 3x – 5y = 7 are parallel, then the value of k is", 
+            options: ["a) 5", "b) -5", "c) 3", "d) -3"], 
+            answer: "a" 
+        },
+        { 
+            question: "One equation of a pair of dependent linear equations is 2x + 5y = 3. The second equation will be", 
+            options: ["a) 2x + 5y = 6", "b) 3x + 5y = 3", "c) -10x – 25y + 15 = 0", "d) 10x + 25y = 15"], 
+            answer: "c" 
+        },
+        { 
+            question: "If x = a, y = b is the solution of the equations x + y = 5 and 2x – 3y = 4, then the values of a and b are respectively", 
+            options: ["a) 6, -1", "b) 2, 3", "c) 1, 4", "d) 19/5, 6/5"], 
+            answer: "d" 
+        },
+        { 
+            question: "The graph of x = -2 is a line parallel to the", 
+            options: ["a) x-axis", "b) y-axis", "c) Both x- and y-axis", "d) None of these"], 
+            answer: "b" 
+        },
+        { 
+            question: "The graph of y = 4x is a line", 
+            options: ["a) Parallel to x-axis", "b) Parallel to y-axis", "c) Perpendicular to y-axis", "d) Passing through the origin"], 
+            answer: "d" 
+        },
+        { 
+            question: "The graph of y = 5 is a line parallel to the", 
+            options: ["a) x-axis", "b) y-axis", "c) Both axis", "d) None of these"], 
+            answer: "a" 
+        },
+        { 
+            question: "Two equations in two variables taken together are called", 
+            options: ["a) Linear equations", "b) Quadratic equations", "c) Simultaneous equations", "d) None of these"], 
+            answer: "c" 
+        },
+        { 
+            question: "If am bl then the system of equations ax + by = c, lx + my = n, has", 
+            options: ["a) A unique solution", "b) No solution", "c) Infinitely many solutions", "d) None of these"], 
+            answer: "a" 
+        },
+        { 
+            question: "If in the equation x + 2y = 10, the value of y is 6, then the value of x will be", 
+            options: ["a) -2", "b) 2", "c) 4", "d) 5"], 
+            answer: "a" 
+        },
+        { 
+            question: "The graph of the equation 2x + 3y = 5 is a", 
+            options: ["a) Vertical line", "b) Straight line", "c) Horizontal line", "d) None of these"], 
+            answer: "b" 
+        },
+        { 
+            question: "The value of k, for which equations 3x + 5y = 0 and kx + lOy = 0 has a non-zero solution is", 
+            options: ["a) 6", "b) 0", "c) 2", "d) 5"], 
+            answer: "a" 
+        },
+        { 
+            question: "The value of k, for which the system of equations x + (k + l)y = 5 and (k + l)x + 9y = 8k – 1 has infinitely many solutions is", 
+            options: ["a) 2", "b) 3", "c) 4", "d) 5"], 
+            answer: "a" 
+        },
+        { 
+            question: "The value of k for which the equations (3k + l)x + 3y = 2; (k2 + l)x + (k – 2)y = 5 has no solution, then k is equal to", 
+            options: ["a) 2", "b) 3", "c) 1", "d) -1"], 
+            answer: "d" 
+        }
+    ];
+
+    function generateQuestion() {
+        var index = Math.floor(Math.random() * questions.length);
+        var questionObj = questions[index];
+        var questionHTML = "<div>" + questionObj.question + "</div>";
+        var optionsHTML = "";
+        for (var i = 0; i < questionObj.options.length; i++) {
+            optionsHTML += "<div class='option'><input type='radio' name='option' value='" + questionObj.options[i].charAt(0).toLowerCase() + "'> " + questionObj.options[i] + "</div>";
+        }
+        document.getElementById("question").innerHTML = questionHTML;
+        document.getElementById("options").innerHTML = optionsHTML;
+    }
+
+    function checkAnswer() {
+        var userAnswer = document.querySelector('input[name="option"]:checked');
+        if (userAnswer) {
+            userAnswer = userAnswer.value;
+            var questionIndex = Math.floor(Math.random() * questions.length);
+            var correctAnswer = questions[questionIndex].answer;
+
+            if (userAnswer === correctAnswer) {
+                document.getElementById("result").innerHTML = "Correct!";
+            } else {
+                document.getElementById("result").innerHTML = "Incorrect. The correct answer is " + correctAnswer.toUpperCase();
+            }
+
+            // Generate a new question
+            generateQuestion();
+        } else {
+            alert("Please select an option.");
+        }
+    }
+
+    // Initial question generation
+    generateQuestion();
+</script>
+
+</body>
+</html>
